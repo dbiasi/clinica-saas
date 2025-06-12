@@ -9,6 +9,6 @@ namespace backend.Dtos.Psicologo
         public string? DadosBancarios { get; set; }
         public string? DisponibilidadeAgenda { get; set; }
 
-        public List<string> LocaisAtendimento { get; set; } = new();
+        public List<LocalAtendimentoResponseDto> LocaisAtendimento { get; set; } = new();
     }
 }

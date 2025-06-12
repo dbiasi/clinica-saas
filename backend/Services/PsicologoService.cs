@@ -15,6 +15,13 @@ namespace backend.Services
             _context = context;
         }
 
+        /*
+        Esse endpoint é responsável por criar um novo psicólogo.
+        Ele recebe um DTO com os dados necessários, cria uma instância do modelo Psicologo,
+        adiciona ao contexto e salva as alterações no banco de dados.
+        Retorna um DTO com os dados do psicólogo criado ou lança uma exceção em caso de erro.
+        */
+
         public async Task<PsicologoResponseDto> CriarAsync(PsicologoCreateDto dto)
         {
             var psicologo = new Psicologo
@@ -25,7 +32,22 @@ namespace backend.Services
                 DadosBancarios = dto.DadosBancarios,
                 DisponibilidadeAgenda = dto.DisponibilidadeAgenda,
                 LocaisAtendimento = dto.LocaisAtendimento
-                    .Select(endereco => new LocalAtendimento { Endereco = endereco })
+                    .Select(l => new LocalAtendimento
+                    {
+                        Cep = l.Cep,
+                        Logradouro = l.Logradouro,
+                        Numero = l.Numero,
+                        Bairro = l.Bairro,
+                        Cidade = l.Cidade,
+                        Estado = l.Estado,
+                        TipoEndereco = l.TipoEndereco,
+                        NumeroApartamento = l.NumeroApartamento,
+                        Andar = l.Andar,
+                        NomeRecepcionista = l.NomeRecepcionista,
+                        Complemento = l.Complemento,
+                        PossuiEstacionamento = l.PossuiEstacionamento,
+                        Observacoes = l.Observacoes
+                    })
                     .ToList()
             };
 
@@ -49,7 +71,23 @@ namespace backend.Services
                     DadosBancarios = p.DadosBancarios,
                     DisponibilidadeAgenda = p.DisponibilidadeAgenda,
                     LocaisAtendimento = p.LocaisAtendimento
-                        .Select(l => l.Endereco)
+                        .Select(l => new LocalAtendimentoResponseDto
+                        {
+                            Id = l.Id,
+                            Cep = l.Cep,
+                            Logradouro = l.Logradouro,
+                            Numero = l.Numero,
+                            Bairro = l.Bairro,
+                            Cidade = l.Cidade,
+                            Estado = l.Estado,
+                            TipoEndereco = l.TipoEndereco,
+                            NumeroApartamento = l.NumeroApartamento,
+                            Andar = l.Andar,
+                            NomeRecepcionista = l.NomeRecepcionista,
+                            Complemento = l.Complemento,
+                            PossuiEstacionamento = l.PossuiEstacionamento,
+                            Observacoes = l.Observacoes
+                        })
                         .ToList()
                 })
                 .ToListAsync();
@@ -69,7 +107,23 @@ namespace backend.Services
                     DadosBancarios = p.DadosBancarios,
                     DisponibilidadeAgenda = p.DisponibilidadeAgenda,
                     LocaisAtendimento = p.LocaisAtendimento
-                        .Select(l => l.Endereco)
+                        .Select(l => new LocalAtendimentoResponseDto
+                        {
+                            Id = l.Id,
+                            Cep = l.Cep,
+                            Logradouro = l.Logradouro,
+                            Numero = l.Numero,
+                            Bairro = l.Bairro,
+                            Cidade = l.Cidade,
+                            Estado = l.Estado,
+                            TipoEndereco = l.TipoEndereco,
+                            NumeroApartamento = l.NumeroApartamento,
+                            Andar = l.Andar,
+                            NomeRecepcionista = l.NomeRecepcionista,
+                            Complemento = l.Complemento,
+                            PossuiEstacionamento = l.PossuiEstacionamento,
+                            Observacoes = l.Observacoes
+                        })
                         .ToList()
                 })
                 .FirstOrDefaultAsync();
@@ -91,11 +145,26 @@ namespace backend.Services
 
             if (dto.LocaisAtendimento != null)
             {
-                psicologo.LocaisAtendimento.Clear();
-                foreach (var endereco in dto.LocaisAtendimento)
+                // Remove todos os locais antigos
+                _context.LocaisAtendimento.RemoveRange(psicologo.LocaisAtendimento);
+
+                // Cria novos objetos com os dados recebidos no DTO
+                psicologo.LocaisAtendimento = dto.LocaisAtendimento.Select(l => new LocalAtendimento
                 {
-                    psicologo.LocaisAtendimento.Add(new LocalAtendimento { Endereco = endereco });
-                }
+                    Cep = l.Cep,
+                    Logradouro = l.Logradouro,
+                    Numero = l.Numero,
+                    Bairro = l.Bairro,
+                    Cidade = l.Cidade,
+                    Estado = l.Estado,
+                    TipoEndereco = l.TipoEndereco,
+                    NumeroApartamento = l.NumeroApartamento,
+                    Andar = l.Andar,
+                    NomeRecepcionista = l.NomeRecepcionista,
+                    Complemento = l.Complemento,
+                    PossuiEstacionamento = l.PossuiEstacionamento,
+                    Observacoes = l.Observacoes
+                }).ToList();
             }
 
             await _context.SaveChangesAsync();

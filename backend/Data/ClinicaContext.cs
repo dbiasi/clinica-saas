@@ -15,5 +15,7 @@ namespace backend.Data
         public DbSet<PacienteMedicamento> PacienteMedicamentos { get; set; } // 👈 Estamos pedindo para o EF incluir a nova entidade PacienteMedicamento nas migrations e no banco de dados
         public DbSet<Tarefa> Tarefas { get; set; } = null!;
         public DbSet<Psicologo> Psicologos { get; set; } = null!;
+        public DbSet<LocalAtendimento> LocaisAtendimento { get; set; } = null!;
+
     }
 }
