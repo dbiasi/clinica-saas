@@ -1,0 +1,41 @@
+namespace backend.Enums
+{
+    public enum DimensaoTipo
+    {
+        VidaAmorosa = 1,
+        Familia = 2,
+        Amizades = 3,
+        VidaSocial = 4,
+        Trabalho = 5,
+        Carreira = 6,
+        Financas = 7,
+        Autoestima = 8,
+        Ansiedade = 9,
+        Depressao = 10,
+        Estresse = 11,
+        Espiritualidade = 12,
+        SaudeFisica = 13,
+        Sono = 14,
+        Alimentacao = 15,
+        Lazer = 16,
+        Propósito = 17,
+        Autoconhecimento = 18,
+        InteligenciaEmocional = 19,
+        RelacaoComOCorpo = 20,
+        Sexualidade = 21,
+        RelacaoComPais = 22,
+        Criatividade = 23,
+        Produtividade = 24,
+        Estudos = 25,
+        Motivacao = 26,
+        ControleDeImpulsos = 27,
+        SentimentoDeCulpa = 28,
+        RelacaoComFilhos = 29,
+        RelacaoComColegasDeTrabalho = 30,
+        Comunicacao = 31,
+        TomadaDeDecisao = 32,
+        Autonomia = 33,
+        Liberdade = 34,
+        EstabilidadeEmocional = 35
+    }
+}

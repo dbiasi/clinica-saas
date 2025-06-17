@@ -33,10 +33,16 @@ namespace backend.Migrations
                     b.Property<DateTime>("DataHora")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<int>("LocalAtendimentoId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Observacao")
                         .HasColumnType("longtext");
 
                     b.Property<int>("PacienteId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PsicologoId")
                         .HasColumnType("int");
 
                     b.Property<string>("Status")
@@ -48,9 +54,77 @@ namespace backend.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("LocalAtendimentoId");
+
                     b.HasIndex("PacienteId");
 
+                    b.HasIndex("PsicologoId");
+
                     b.ToTable("Consultas");
+                });
+
+            modelBuilder.Entity("backend.Models.LocalAtendimento", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Andar")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Bairro")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Cep")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Cidade")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Complemento")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Estado")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Logradouro")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("NomeRecepcionista")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Numero")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("NumeroApartamento")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Observacoes")
+                        .HasColumnType("longtext");
+
+                    b.Property<bool>("PossuiEstacionamento")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<int>("PsicologoId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TipoEndereco")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PsicologoId");
+
+                    b.ToTable("LocaisAtendimento");
                 });
 
             modelBuilder.Entity("backend.Models.Medicamento", b =>
@@ -110,6 +184,9 @@ namespace backend.Migrations
                     b.Property<string>("PlanoSaude")
                         .HasColumnType("longtext");
 
+                    b.Property<int?>("PsicologoId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("PsiquiatraId")
                         .HasColumnType("int");
 
@@ -120,6 +197,8 @@ namespace backend.Migrations
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PsicologoId");
 
                     b.HasIndex("PsiquiatraId");
 
@@ -180,6 +259,37 @@ namespace backend.Migrations
                     b.HasIndex("PacienteId");
 
                     b.ToTable("PacienteMedicamentos");
+                });
+
+            modelBuilder.Entity("backend.Models.Psicologo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CRP")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("DadosBancarios")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("DisponibilidadeAgenda")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Telefone")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Psicologos");
                 });
 
             modelBuilder.Entity("backend.Models.Psiquiatra", b =>
@@ -248,19 +358,95 @@ namespace backend.Migrations
                     b.ToTable("ResponsaveisLegais");
                 });
 
+            modelBuilder.Entity("backend.Models.Tarefa", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ComentarioPsicologo")
+                        .HasColumnType("longtext");
+
+                    b.Property<bool>("Concluida")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<DateTime?>("DataConclusao")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime>("DataCriacao")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime?>("DataLimite")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Descricao")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("ObservacoesPaciente")
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("PacienteId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PsicologoId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PacienteId");
+
+                    b.HasIndex("PsicologoId");
+
+                    b.ToTable("Tarefas");
+                });
+
             modelBuilder.Entity("backend.Models.Consulta", b =>
                 {
+                    b.HasOne("backend.Models.LocalAtendimento", "LocalAtendimento")
+                        .WithMany()
+                        .HasForeignKey("LocalAtendimentoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("backend.Models.Paciente", "Paciente")
                         .WithMany("Consultas")
                         .HasForeignKey("PacienteId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("backend.Models.Psicologo", "Psicologo")
+                        .WithMany("Consultas")
+                        .HasForeignKey("PsicologoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("LocalAtendimento");
+
                     b.Navigation("Paciente");
+
+                    b.Navigation("Psicologo");
+                });
+
+            modelBuilder.Entity("backend.Models.LocalAtendimento", b =>
+                {
+                    b.HasOne("backend.Models.Psicologo", "Psicologo")
+                        .WithMany("LocaisAtendimento")
+                        .HasForeignKey("PsicologoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Psicologo");
                 });
 
             modelBuilder.Entity("backend.Models.Paciente", b =>
                 {
+                    b.HasOne("backend.Models.Psicologo", null)
+                        .WithMany("Pacientes")
+                        .HasForeignKey("PsicologoId");
+
                     b.HasOne("backend.Models.Psiquiatra", "DadosPsiquiatra")
                         .WithMany("Pacientes")
                         .HasForeignKey("PsiquiatraId");
@@ -293,6 +479,25 @@ namespace backend.Migrations
                     b.Navigation("Paciente");
                 });
 
+            modelBuilder.Entity("backend.Models.Tarefa", b =>
+                {
+                    b.HasOne("backend.Models.Paciente", "Paciente")
+                        .WithMany()
+                        .HasForeignKey("PacienteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("backend.Models.Psicologo", "Psicologo")
+                        .WithMany("Tarefas")
+                        .HasForeignKey("PsicologoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Paciente");
+
+                    b.Navigation("Psicologo");
+                });
+
             modelBuilder.Entity("backend.Models.Medicamento", b =>
                 {
                     b.Navigation("PacientesMedicamentos");
@@ -303,6 +508,17 @@ namespace backend.Migrations
                     b.Navigation("Consultas");
 
                     b.Navigation("MedicamentosUsados");
+                });
+
+            modelBuilder.Entity("backend.Models.Psicologo", b =>
+                {
+                    b.Navigation("Consultas");
+
+                    b.Navigation("LocaisAtendimento");
+
+                    b.Navigation("Pacientes");
+
+                    b.Navigation("Tarefas");
                 });
 
             modelBuilder.Entity("backend.Models.Psiquiatra", b =>

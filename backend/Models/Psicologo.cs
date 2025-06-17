@@ -18,5 +18,5 @@ public class Psicologo
     public List<LocalAtendimento> LocaisAtendimento { get; set; } = new();
     public List<Paciente> Pacientes { get; set; } = new();
     public List<Tarefa> Tarefas { get; set; } = new();
-    public List<Consulta> Consultas { get; set; } = new();
+    public List<Sessao> Consultas { get; set; } = new();
 }

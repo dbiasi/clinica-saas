@@ -28,8 +28,6 @@ builder.Services.AddDbContext<ClinicaContext>(options =>
     )
 );
 
-builder.Services.AddScoped<PacienteService>();
-builder.Services.AddScoped<ConsultaService>();
 
 // 👈 Registramos o serviço ResponsavelLegalService como a implementação da interface IResponsavelLegalService
 // Por que fizemos isso?
@@ -40,6 +38,14 @@ builder.Services.AddScoped<IMedicamentoService, MedicamentoService>();
 builder.Services.AddScoped<IPacienteMedicamentoService, PacienteMedicamentoService>();
 builder.Services.AddScoped<ITarefaService, TarefaService>();
 builder.Services.AddScoped<IPsicologoService, PsicologoService>();
+builder.Services.AddScoped<ISessaoService, SessaoService>();
+builder.Services.AddScoped<IPacienteService, PacienteService>();
+builder.Services.AddScoped<IRelatorioSessaoService, RelatorioSessaoService>();
+builder.Services.AddScoped<IDimensaoService, DimensaoService>();
+builder.Services.AddScoped<IAvaliacaoDimensaoService, AvaliacaoDimensaoService>();
+builder.Services.AddScoped<ICobrancaService, CobrancaService>();
+builder.Services.AddScoped<IPagamentoService, PagamentoService>();
+
 
 
 

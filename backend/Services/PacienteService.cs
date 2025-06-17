@@ -2,10 +2,12 @@ using backend.Models;
 using backend.Dtos.Paciente;
 using backend.Data;
 using Microsoft.EntityFrameworkCore;
+using backend.Services.Interfaces;
+
 
 namespace backend.Services
 {
-    public class PacienteService
+    public class PacienteService : IPacienteService
     {
         private readonly ClinicaContext _context;
 

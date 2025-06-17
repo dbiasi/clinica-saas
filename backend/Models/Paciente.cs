@@ -16,7 +16,7 @@ namespace backend.Models
         public bool Ativo { get; set; } = true;
 
         // Relacionamento
-        public ICollection<Consulta> Consultas { get; set; } = new List<Consulta>();
+        public ICollection<Sessao> Consultas { get; set; } = new List<Sessao>();
         public List<PacienteMedicamento> MedicamentosUsados { get; set; } = new(); // 🔁 Lista de medicamentos que ele usa
         // public List<Arquivo> Anexos { get; set; } = new();
         public int? ResponsavelLegalId { get; set; }

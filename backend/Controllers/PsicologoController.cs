@@ -1,4 +1,4 @@
-using backend.Dtos.Psicologa;
+using backend.Dtos.Psicologo;
 using backend.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,45 +6,45 @@ namespace backend.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class PsicologaController : ControllerBase
+    public class PsicologoController : ControllerBase
     {
-        private readonly IPsicologaService _service;
+        private readonly IPsicologoService _service;
 
-        public PsicologaController(IPsicologaService service)
+        public PsicologoController(IPsicologoService service)
         {
             _service = service;
         }
 
-        // POST: /Psicologa
+        // POST: /Psicologo
         [HttpPost]
-        public async Task<ActionResult<PsicologaResponseDto>> Criar([FromBody] PsicologaCreateDto dto)
+        public async Task<ActionResult<PsicologoResponseDto>> Criar([FromBody] PsicologoCreateDto dto)
         {
             var nova = await _service.CriarAsync(dto);
             return CreatedAtAction(nameof(BuscarPorId), new { id = nova.Id }, nova);
         }
 
-        // GET: /Psicologa
+        // GET: /Psicologo
         [HttpGet]
-        public async Task<ActionResult<List<PsicologaResponseDto>>> BuscarTodas()
+        public async Task<ActionResult<List<PsicologoResponseDto>>> BuscarTodas()
         {
             var lista = await _service.BuscarTodasAsync();
             return Ok(lista);
         }
 
-        // GET: /Psicologa/5
+        // GET: /Psicologo/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<PsicologaResponseDto>> BuscarPorId(int id)
+        public async Task<ActionResult<PsicologoResponseDto>> BuscarPorId(int id)
         {
-            var psicologa = await _service.BuscarPorIdAsync(id);
-            if (psicologa == null)
+            var psicologo = await _service.BuscarPorIdAsync(id);
+            if (psicologo == null)
                 return NotFound();
 
-            return Ok(psicologa);
+            return Ok(psicologo);
         }
 
-        // PUT: /Psicologa/5
+        // PUT: /Psicologo/5
         [HttpPut("{id}")]
-        public async Task<ActionResult> Atualizar(int id, [FromBody] PsicologaUpdateDto dto)
+        public async Task<ActionResult> Atualizar(int id, [FromBody] PsicologoUpdateDto dto)
         {
             var sucesso = await _service.AtualizarAsync(id, dto);
             if (!sucesso)
@@ -53,7 +53,7 @@ namespace backend.Controllers
             return NoContent();
         }
 
-        // DELETE: /Psicologa/5
+        // DELETE: /Psicologo/5
         [HttpDelete("{id}")]
         public async Task<ActionResult> Deletar(int id)
         {
